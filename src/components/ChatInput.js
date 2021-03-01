@@ -1,14 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import SendIcon from '@material-ui/icons/Send';
+ 
+export const ChatInput = ({ sendMessage }) => {
 
-export const ChatInput = () => {
+    const [text, setText] = useState('');
+
+    const send = (e) => {
+        e.preventDefault();
+        if (!text) {
+            return;
+        }
+        sendMessage(text);
+        setText('');
+    }
+
     return (
         <Container>
             <InputContainer>
-                <form>
-                    <input type="text" placeholder="message here..." />
-                    <SendButton>
+                <form onSubmit={send}>
+                    <input 
+                        type="text" 
+                        placeholder="message here..."
+                        value={text}
+                        onChange={(e) => setText(e.target.value)} />
+                    <SendButton 
+                        type="submit">
                         <Send />
                     </SendButton>
                 </form>
